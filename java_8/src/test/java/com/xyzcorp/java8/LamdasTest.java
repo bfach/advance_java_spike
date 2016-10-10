@@ -2,6 +2,7 @@ package com.xyzcorp.java8;
 
 import static org.junit.Assert.assertEquals;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -169,10 +170,56 @@ public class LamdasTest {
 		System.out.println(Functions.myMap(integers, rate::apply));
 	}
 
+	@Test
 	public void testMethodReferenceNewType(){
 		List<Integer> integers = Arrays.asList(3, 1, 4, 12, 10000000);
 		//System.out.println(Functions.myMap(integers, value -> new Double(value)));
 		System.out.println(Functions.myMap(integers,  Double::new));
 
 	}
+
+	@Test
+	public void testMyGenerate(){
+		/*List<LocalDateTime> result = Functions.generate(new MySupplier<LocalDateTime>() {
+			@Override
+			public LocalDateTime get() {
+				return LocalDateTime.now();
+			}
+		}, 10);*/
+		//below it says, provide me nothing, but supply me something :)
+		//
+		// FYI the code below is the lamda expression of above...
+		List<LocalDateTime> result = Functions.generate(() -> LocalDateTime.now(), 10);
+
+		assertEquals(10, result.size());
+		System.out.println(result);
+	}
+
+
+	public MyPredicate<String> stringHasSizeOf(int length){
+		return x -> x.length() == length;
+//		return new MyPredicate<String>() {
+//			@Override
+//			public boolean test(String x) {
+//				return x.length() == length;
+//			}
+//		};
+	}
+
+	@Test
+	public void testCloserRefactoring(){
+		MyPredicate<String> stringHas4Items = x -> x.length() == 4;
+		MyPredicate<String> stringHas2Items = x -> x.length() == 2;
+
+		List<String> foodName = Arrays.asList("Naan", "Ravioli", "Tacos", "Pizza", "IT");
+
+		System.out.println(Functions.myFilter(foodName, stringHas4Items));
+		System.out.println(Functions.myFilter(foodName, stringHas2Items));
+
+		System.out.println(Functions.myFilter(foodName, stringHasSizeOf(4)));
+		System.out.println(Functions.myFilter(foodName, stringHasSizeOf(2)));
+	}
+	
+	
+	
 }

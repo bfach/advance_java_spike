@@ -8,7 +8,6 @@ import java.util.function.Supplier;
  * Create an implementation that filters a list of generic types, based on the
  * rule injected in the predicate implementation
  *
- * @param <T>
  */
 public class Functions {
 
@@ -79,7 +78,7 @@ public class Functions {
 	 * @param <T>
      * @return
      */
-	public static <T> List<T> generate(Supplier<T> supplier, int count){
+	public static <T> List<T> generate(MySupplier<T> supplier, int count){
 
 		final List<T> result = new ArrayList<>();
 
