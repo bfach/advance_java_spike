@@ -111,3 +111,5 @@ buildNumber.properties
 /google_guice/google_guice.iml
 /advanced_java/advanced_java.iml
 /.idea/
+
+.DS_Store

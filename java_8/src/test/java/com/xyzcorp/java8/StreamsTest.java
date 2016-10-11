@@ -2,6 +2,7 @@ package com.xyzcorp.java8;
 
 import org.junit.Test;
 
+import java.time.ZoneId;
 import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.BinaryOperator;
@@ -130,7 +131,7 @@ public class StreamsTest {
 
 
     @Test
-    public void factorial(){
+    public void factorial() {
 
         //The stream below doesn't make a ton of sense for factorial...
         Stream<Integer> stream = Stream.of(1, 2, 3, 4, 5, 6);
@@ -165,11 +166,58 @@ public class StreamsTest {
     }
 
     @Test
-    public void testFlatMap(){
+    public void testFlatMap() {
         //Stream<Stream<Integer>> streamStream = Stream.of(1, 2, 3, 4).map(x -> Stream.of(-x, x, x + 1));
         //this is where flatMap comes in... it is a combo of map and flatten
         Stream<Integer> streamStream = Stream.of(1, 2, 3, 4).flatMap(x -> Stream.of(-x, x, x + 1));
 
-        System.out.println("stream stream"  + streamStream.collect(Collectors.toList()));
+        System.out.println("stream stream" + streamStream.collect(Collectors.toList()));
+    }
+
+    @Test
+    public void testSortedWithComparator() {
+        Stream<String> stream = Stream.of("Apple", "Orange", "Banana", "Tomato",
+                "Grapes");
+        System.out.println(stream
+                .sorted((string1, string2) -> string1.length() - string2.length())
+                .collect(Collectors.toList()));
+    }
+
+    @Test
+    public void testSortedWithComparatorLevels() {
+        Stream<String> stream = Stream.of("Apple", "Orange", "Banana", "Tomato",
+                "Grapes");
+        Comparator<String> stringComparator = Comparator.comparing(String::length)
+                .thenComparing(x -> x);
+        System.out.println("Sorted stream" + stream
+                .sorted(stringComparator)
+                .collect(Collectors.toList()));
+    }
+
+    @Test
+    public void testJoining() {
+        System.out.println("List= " + Stream.of("Apple", "Orange", "Banana", "Tomato",
+                "Grapes").collect(Collectors.joining(", ")));
+
+        System.out.println("List2= " + Stream.of("Apple", "Orange", "Banana", "Tomato",
+                "Grapes").collect(Collectors.joining(", ", "{", "}")));
+
+
+    }
+
+    /**
+     * Step 1: java.time.ZoneId has a method called getAvailableZoneIds that returns a Set<String>,
+     convert the Set<String> to a Stream<String>
+     Step 2: Next find all the distinct time zones in the Americas.
+     Step 3: Only return the name of the time zone not the prefix of America/. If the time zone was
+     America/New_York, make sure that it is only New_York.
+     Step 4: Use sorted() which uses the natural Comparable of the object
+     Step 5: Recollect the stream back into a Set or List
+     */
+    @Test
+    public void testZoneId() {
+        System.out.println("Timezones= " + ZoneId.getAvailableZoneIds().stream()
+                .filter(x -> x.startsWith("America"))
+                .map(x -> x.split("/")[1]).sorted().collect(Collectors.toSet()));
     }
 }
