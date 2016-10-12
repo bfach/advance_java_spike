@@ -16,7 +16,7 @@ public class H2ConnectionProvider implements Provider<Connection> {
     public H2ConnectionProvider(){}
 
     @Inject
-    public H2ConnectionProvider(@Named("jdbcCP") DataSource cp) {
+    public H2ConnectionProvider(@Named("h2CP") DataSource cp) {
         this.cp = cp;
     }
 

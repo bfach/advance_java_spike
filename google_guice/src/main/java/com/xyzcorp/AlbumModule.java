@@ -23,7 +23,8 @@ public class AlbumModule extends AbstractModule {
         bind(AlbumDAO.class).to(StandardAlbumDAO.class);
         //this binds the connection to the H2 annotation, and to provider implementation
         bind(Connection.class).annotatedWith(H2.class).toProvider(H2ConnectionProvider.class);
-        bind(javax.sql.DataSource.class).annotatedWith(Names.named("jdbcCP")).toProvider(H2ConnectionPoolProvider.class).asEagerSingleton();
+        bind(javax.sql.DataSource.class).annotatedWith(Names.named("h2CP"))
+                .toProvider(H2ConnectionPoolProvider.class).asEagerSingleton();
         //another way you can do this... use the Nameed annotation
         //bind(Connection.class).annotatedWith(Names.named("h2")).toProvider(H2ConnectionProvider.class);
 
