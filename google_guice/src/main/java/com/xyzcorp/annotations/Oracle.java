@@ -3,15 +3,12 @@ package com.xyzcorp.annotations;
 import com.google.inject.BindingAnnotation;
 
 import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import static java.lang.annotation.ElementType.*;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-/**
- * Created by bfach on 10/11/16.
- */
 @BindingAnnotation
 @Target({FIELD, METHOD, PARAMETER})
-@Retention(RetentionPolicy.RUNTIME)
+@Retention(RUNTIME)
 public @interface Oracle {}

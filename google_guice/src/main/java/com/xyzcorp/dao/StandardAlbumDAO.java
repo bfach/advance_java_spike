@@ -1,6 +1,7 @@
 package com.xyzcorp.dao;
 
 import com.xyzcorp.annotations.H2;
+import com.xyzcorp.annotations.Oracle;
 import com.xyzcorp.models.Album;
 
 import javax.inject.Inject;
@@ -27,17 +28,8 @@ public class StandardAlbumDAO implements AlbumDAO {
         return preparedStatement.execute();
     }
 
-    /**
-     * The inject annotation says to use the binding framework , and the @H2 annotation is the qualifier (what connection to inject)
-     *
-     * H2 is an annotation that is bound to Connection and the provider H2ConnectionProvider
-     *
-     * Note* you can use @Named("something") instead... and use the Names.named("something")
-     */
     @Inject
-    public void setConnection(@H2 Connection connection) {
-        //This is an example of using the generic annotation... instead of custom annotation
-        //public void setConnection(@Named("h2") Connection connection) {
+    public void setConnection(@Oracle Connection connection) {
         this.connection = connection;
     }
 
