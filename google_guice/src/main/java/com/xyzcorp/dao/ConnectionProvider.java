@@ -4,7 +4,6 @@ import com.google.inject.Provider;
 import com.google.inject.Provides;
 import com.xyzcorp.annotations.H2;
 import com.xyzcorp.annotations.Oracle;
-import org.h2.jdbcx.JdbcConnectionPool;
 
 import javax.inject.Inject;
 import javax.inject.Named;
